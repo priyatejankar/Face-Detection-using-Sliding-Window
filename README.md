@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/priyatejankar/Face-Detection-using-Sliding-Window/blob/master/html/class2013_.jpg" width=400 height=200>
+  <img src="https://github.com/priyatejankar/Face-Detection-using-Sliding-Window/blob/master/html/class2013_.jpg" width=600 height=600>
 </p>
 
 
@@ -13,7 +13,7 @@
 
 <p>HoG features</p>
 <p align="center">
-  <img src="https://github.com/priyatejankar/Face-Detection-using-Sliding-Window/blob/master/html/hog.jpg" width=140 height=400>
+  <img src="https://github.com/priyatejankar/Face-Detection-using-Sliding-Window/blob/master/html/hog.jpg" width=200 height=500>
 </p>
 
 
