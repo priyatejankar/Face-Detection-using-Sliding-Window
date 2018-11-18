@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/priyatejankar/Face-Detection-using-Sliding-Window/blob/master/html/class2013_.jpg" width=600 height=600>
+  <img src="https://github.com/priyatejankar/Face-Detection-using-Sliding-Window/blob/master/html/class2013_.jpg" width=1000 height=600>
 </p>
 
 
