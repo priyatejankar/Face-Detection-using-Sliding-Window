@@ -1,0 +1,255 @@
+<html>
+<head>
+<title>Computer Vision Project</title>
+<link href='http://fonts.googleapis.com/css?family=Nunito:300|Crimson+Text|Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" title="Default" href="styles/github.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+<link rel="stylesheet" href="highlighting/styles/default.css">
+<script src="highlighting/highlight.pack.js"></script>
+
+<style type="text/css">
+body {
+	margin: 0px;
+	width: 100%;
+	font-family: 'Crimson Text', serif;
+	font-size: 20px;
+	background: #fcfcfc;
+}
+h1 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
+	font-size: 28px;
+	margin: 25px 0px 0px 0px;
+	text-transform: lowercase;
+
+}
+
+h2 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
+	font-size: 32px;
+	margin: 15px 0px 35px 0px;
+	color: #333;
+	word-spacing: 3px;
+}
+
+h3 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
+	font-size: 26px;
+	margin: 10px 0px 10px 0px;
+	color: #333;
+	word-spacing: 2px;
+}
+h4 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
+	font-size: 22px;
+	margin: 10px 0px 10px 0px;
+	color: #333;
+	word-spacing: 2px;
+}
+
+h5 {
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
+	font-size: 18px;
+	margin: 10px 0px 10px 0px;
+	color: #111;
+	word-spacing: 2px;
+}
+
+p, li {
+	color: #444;
+}
+
+a {
+	color: #DE3737;
+}
+
+.container {
+	margin: 0px auto 0px auto;
+	width: 1160px;
+}
+
+#header {
+	background: #333;
+	width: 100%;
+}
+
+#headersub {
+	color: #ccc;
+	width: 960px;
+	margin: 0px auto 0px auto;
+	padding: 20px 0px 20px 0px;
+}
+
+.chart {
+	width: 480px;
+}
+.lol {
+	font-size: 16px;
+	color: #888;
+	font-style: italic;
+}
+.sep {
+	height: 1px;
+	width: 100%;
+	background: #999;
+	margin: 20px 0px 20px 0px;
+}
+.footer{
+	font-size: 16px;
+}
+.latex {
+	width: 100%;
+}
+
+.latex img {
+	display: block;
+	margin: 0px auto 0px auto;
+}
+
+pre {
+	font-family: 'Droid Sans Mono';
+	font-size: 14px;
+}
+
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table td img {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#contents a {
+}
+</style>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</head>
+<body>
+<div id="header" >
+<div id="headersub">
+<h1>Priya Tejankar</h1>
+</div>
+</div>
+<div class="container">
+
+<h2> Project 4: Scene recognition with bag of words</h2>
+
+<div style="float: right; padding: 5px">
+<img src="class2013_.jpg" />
+<!-- <div style="float: right; padding: 25px">
+<p style="font-size: 14px">Class of 2013 (Easy image)</p> -->
+</div>
+
+<p> 	In this project, a sliding window face detector algorithm was implemented using Dalal and Triggs. Dalal and Triggs uses SIFT-like HoG features for identifying objects. In this project the following tasks were implemented :           </p>
+
+<ol>
+<li>Get positive features </li>
+<li>Get random negative features </li>
+<li>Mine hard negatives </li>
+<li>Train a SVM using the positive and negative HoG features </li>
+<li>Detect faces using sliding window </li>
+</ol>
+
+<!-- <p> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+ -->
+<div style="clear:both">
+<h3>Get positive features</h3>
+
+<p> In order to get features corresponding to faces, 36*36 face images taken from the Caltech Web Faces project dataset containing 6713 images. HoG features were extracted for each of these images. These features were then reshaped to 1*1116 size and put into an array. An array of size 6713*1116 was obtained as output. The positive training data was augmented by flipping the original image and then extracting the HoG features of the flipped image for Extra Credit. This helped in doubling the size of the original training data.  </p>
+
+<h3>Get random negative features</h3>
+
+<p> In order to get random negative features corresponding to non-faces, different patches of size 36*36 were extracted from the image on single scale to get HoG features. There were a total of 274 images which were split into patches of 36*36 to extract features for non-faces. In addition to this,random negative samples at multiple scales were obtained for extra credit as discussed below.</p>
+
+<h3>Train a SVM using the positive and negative HoG features</h3>
+<p>A SVM classifier was trained using the features corresponding to faces and non-faces. These features were stacked to get <code>X_train</code> and the outputs corresponding to faces were taken as 1 and outputs corresponding to non-faces were taken as -1. These vectors of 1 and -1 were stacked to form <code>y_train</code>. Different values of C like [1e-4,1e-3,5e-2,1,5] were experimented. The best results were observed with <code>C = 5e-2</code>. The False positive rate was observed to be 0.069% and False negative as 0.179%.</p>
+
+<img src="ms83__1_good_take.jpg" width="24%"/>
+<h3>HoG features</h3>
+<img src="hog.jpg" width="24%"/>
+
+
+<h3>Mine hard negatives</h3>
+
+<p> Here the images corresponding to non-faces was given as input and the corresponding HoG features were extracted. The svm object was used to predict the output of the features. In case the output of <code>svm.predict(features)</code> is 1 then it is a 'False Positive'. The features corresponding to such images are appended to the 'negative_features' in order to get better results. </p>
+
+<h3>Detect faces using sliding window</h3>
+<p>Here the detection was done at a single scale using <code>scale_factor = 0.65</code>. <code> cv2.resize()</code> was used to resize the image as per the scale factor. HoG features were then computed for these resized image. 6*6 windows from the HoG features were taken using a <code>stride = 1 </code> and reshaped. These features were then given as input to <code>svm.decision_function()</code>. The output was the confidence score. If the confidence is greater than some threshold which was set to <code>-1</code>, then the co-ordinates of these features are stored. These co-ordinates correspond to co-ordinates of the HoG features, and hence need to be rescaled by multiplying by <code>(template_size/scale_factor)</code> in order to get co-ordinates of the raw image. The image co-ordinates coresponding to face were used to form bounding boxes. The bounding boxes store the <code>[xl,yl,xh,yh]</code>. The confidence values were also stored. The proposed bounding box information along with the confidence values was passed to the NMS algorithm to filter the most confident boxes and eliminate repetition at similar locations. The NMS algorithm selects the bounding boxes with topk best confidence scores. The topk value was set to <code>1000</code>.</p>
+
+
+<h3>Observations with single scale : </h3>
+<p>The AP was observed to be 0.455 as shown in figure below.</p>
+<img src="single_scale.jpg" width="24%"/>
+<img src="ss.jpg" width="24%"/>
+
+<h3>Observations with multi scale for run_detector() and single scale for get_randon_negative_features() : </h3>
+<p> In order to improve the accuracy further detection was done at multiple scales. In <code>run_detector()</code> the image was scaled using <code>[0.9,0.8,0.7,0.65,0.5,0.3,0.2]</code> scaling factors and the results were observed as giving AP = 0.759 for <code>get_random_negative_features()</code> and AP = 0.762 for <code>mine_hard_negs()</code>. Here, the random_negative_features were obtained on single scale only. </p>
+ 
+<tr>
+<td>
+<img src="ms759.jpg" width="24%"/>
+<img src="ms_mine_hard_neg762.jpg"  width="24%"/>
+</td>
+</tr>
+
+
+<h3>Extra credit</h3>
+<p>In order to improve the results, the training data was increased. For getting face data, the given images were flipped and HoG features were extracted from them in addition to the original images. This led the positive training data to become twice its original size i.e. 6713*2=13246.  </p>
+<p>In order to increase non-face data, multiscaling was done at <code>[1.0, 0.8, 0.65]</code> scales on the images. Multiple windows of 36*36 were extracted and their corresponding HoG features were extracted. Then 13000 features were selected at random. This ensured that the SVM was given almost equal positive and negative data.</p>
+<p>The AP was observed to be 0.83 for <code>get_random_negative_features()</code> and 0.834 for <code>mine_hard_negs()</code> as shown in figures below. The precision goes on dropping indicating that the number of false positives increases. </p>
+
+
+<tr>
+<td>
+<img src="ms83.jpg" width="24%"/>
+<img src="ms_hrd_neg_834_take_good.jpg"  width="24%"/>
+</td>
+</tr>
+
+
+
+<!-- The AP was observed to be 0.455 as shown in figure below.</p>
+<img src="single_scale.jpg" width="24%"/>
+
+ -->
+
+<!-- <h2>Example of code with highlighting</h2>
+The javascript in the <code>highlighting</code> folder is configured to do syntax highlighting.<p>
+ -->
+<h3>Sample images along with their bounding boxes</h3>
+
+<table border=1>
+<tr>
+<td>
+<img src="ms83__1_im3.jpg" width="24%"/>
+<img src="ms83__1_im2.jpg"  width="24%"/>
+<img src="ms83__1_im1.jpg" width="24%"/>
+<img src="ms759_im2.jpg" width="24%"/>
+</td>
+</tr>
+
+<tr>
+<td>
+<img src="ms759_im7.jpg" width="24%"/>
+<img src="ms759_im4.jpg"  width="24%"/>
+<img src="hn.jpg" width="24%"/>
+<img src="hard.jpg" width="24%"/>
+</td>
+</tr>
+
+</table>
+
+<!-- <div style="clear:both" >
+<p> 	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div> -->
+</body>
+</html>
